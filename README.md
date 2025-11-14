@@ -1,100 +1,98 @@
-# CLI Snake Codex Demo
+# Snake: Modern GUI Edition
 
-A fully featured Snake game that runs entirely in a Unix-like terminal using
-Python's built-in `curses` module. Move the snake, grab food, avoid walls and
-your own tail, and compete for the top score recorded on disk.
+A polished take on the classic Snake experience, rebuilt with a smooth 60 FPS
+pygame interface. Glide through a vibrant playfield, chase glowing apples, and
+switch between rich visual themes while competing for the high score.
 
 ## Features
 
-- Smooth, flicker-free rendering in a bordered terminal play field.
-- Keyboard controls using arrow keys or WASD.
-- Pause (`p`) and quit (`q`) shortcuts plus restart prompts on game over.
-- Random food placement that always appears in an empty cell.
-- Full collision detection against walls and the snake's body.
-- Persistent high score tracking stored in `highscore.dat` alongside the game.
-- Clean, object-oriented structure with dedicated `Snake` and `SnakeGame` classes.
-- Customisable board size, speed, and glyphs through module-level constants.
+- **Fluid animation** with interpolation so the snake glides between cells at
+  roughly 60 frames per second.
+- **Theme system** featuring Classic Green, Ocean Blue, and Cyberpunk palettes
+  with matching gradients, accents, and overlays.
+- **Animated visuals** including a pulsing apple glow, gentle menu gradients, and
+  soft lighting on the snake.
+- **Professional launch screen** with title, theme selection controls, Start and
+  Quit buttons, and a dynamic background.
+- **In-game HUD** showing the current score, persistent high score, and active
+  theme.
+- **Pause overlay** with dimmed playfield and prominent "Paused" status.
+- **Game-over modal** summarising your run with options to restart or return to
+  the main menu.
+- **High score persistence** stored locally in `highscore.dat`.
 
 ## Requirements
 
-- Python 3.8 or newer.
-- A Unix-like terminal (Linux, macOS, WSL) capable of running the standard
-  library `curses` module. Windows users can run the game through WSL or another
-  environment that supports curses.
-
-No third-party packages are required.
+- Python 3.9 or newer.
+- A system capable of running [pygame](https://www.pygame.org/) (Windows, macOS,
+  and Linux are supported).
 
 ## Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
 
    ```bash
    git clone https://github.com/DarrenOsborne/CLISnakeCodexDemo.git
    cd CLISnakeCodexDemo
    ```
 
-2. (Optional) Create and activate a virtual environment if you prefer to keep
-   Python projects isolated. No extra dependencies need to be installed.
+2. **Create a virtual environment** (recommended):
+
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows use: .venv\Scripts\activate
+   ```
+
+3. **Install dependencies:**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ## Running the Game
 
-Launch the game directly with Python:
+Launch the GUI with Python:
 
 ```bash
-python3 snake.py
+python main.py
 ```
 
-The terminal will switch to a full-screen style interface managed by curses. The
-terminal state is automatically restored when you quit the game.
+The game opens with a themed launch screen where you can pick a colour palette
+before starting a run.
 
 ## Controls
 
-| Key(s)          | Action                         |
-|-----------------|--------------------------------|
-| Arrow keys/WASD | Move up, down, left, or right. |
-| `p`             | Pause or resume the game.      |
-| `q`             | Quit immediately.              |
-| `r` (on game over) | Restart a new round.       |
+| Key(s)            | Action                                      |
+|-------------------|---------------------------------------------|
+| Arrow keys / WASD | Move the snake.                             |
+| `P`               | Pause or resume gameplay.                   |
+| `Esc`             | Return to the main menu from any game state.|
+| Mouse             | Interact with menu buttons and theme arrows.|
 
-The snake moves continuously even if no keys are pressed, so plan ahead and be
-ready to change direction.
+## Gameplay Overview
+
+1. Choose a theme from the launch screen using the on-screen arrows, then click
+   **Start Game**.
+2. Guide the snake to the glowing apple. Each apple increases your score and the
+   snake's length.
+3. Avoid colliding with the snake's body or the edge of the arena. Fill the
+   entire board to trigger a celebratory win.
+4. Pause at any time with `P`, or return to the menu with `Esc`.
 
 ## High Scores
 
-The highest score achieved is stored in `highscore.dat` in the repository
-folder. If the file cannot be written (for example due to filesystem
-permissions), the game will silently continue without saving.
+The highest score achieved is stored in `highscore.dat` in the project root. The
+file is created automatically the first time you beat the current record.
 
 ## Customisation
 
-You can tweak the game's behaviour by editing the constants at the top of
-`snake.py`:
+- **Themes:** Adjust or add palettes in [`theme.py`](theme.py). Each theme
+  controls gradients, snake colours, overlays, and highlight accents.
+- **Board and speed:** Modify grid dimensions, cell size, or movement interval in
+  [`game.py`](game.py) to tailor difficulty or presentation.
+- **Snake behaviour:** The movement and collision logic is encapsulated in
+  [`snake.py`](snake.py) if you want to experiment with new mechanics.
 
-- `BOARD_WIDTH` and `BOARD_HEIGHT` – change the size of the play area.
-- `TICK_RATE` – adjust the speed of the snake (lower is faster).
-- `INITIAL_SNAKE_LENGTH` – start the snake longer or shorter.
-- `WALL_CHAR`, `SNAKE_HEAD_CHAR`, `SNAKE_BODY_CHAR`, and `FOOD_CHAR` – adjust
-  the characters used for drawing.
+After making changes, rerun `python main.py` to see them in action.
 
-After modifying these values, rerun `python3 snake.py` to see the changes.
-
-## Code Structure
-
-- `snake.py` – Contains all game code, including:
-  - `Direction`, a dataclass representing x/y deltas.
-  - `Snake`, which tracks the snake's body segments and movement.
-  - `SnakeGame`, responsible for game state, drawing, input, and the main loop.
-  - Helper functions for key bindings, food placement, and high score storage.
-  - A `start()` helper function and `main()` entry point used by
-    `curses.wrapper` to safely manage the terminal state.
-
-## Troubleshooting
-
-- If the window looks distorted, enlarge the terminal so it can display at
-  least 80×30 characters.
-- On macOS you may need to install Python with `brew` to get a version linked
-  against the system curses (Python 3.8+ installed via Homebrew works well).
-- If the keyboard controls feel unresponsive, ensure the terminal has focus and
-  that no other application is intercepting the arrow keys.
-
-Enjoy the nostalgia and happy hacking!
+Enjoy the neon glow and happy hacking!
